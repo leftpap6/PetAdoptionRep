@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/cover.css">
+</head>
+<body>
+
+<header class="cover-header" th:fragment="header">
+    <!-- Navigation Links on the Left -->
+    <div class="nav-links">
+        <a class="nav-link" href="/" data-path="/">Home</a>
+        <a class="dog-btn" href="/dogs" data-path="/dogs">Dogs</a>
+        <a class="nav-link" href="/cats" data-path="/cats">Cats</a>
+        <a class="nav-link" href="/shelters" data-path="/shelters">Shelters</a>
+    </div>
+
+
+    <!-- Title in the Center -->
+<!--    <div class="cover-title">Buddy Adopt</div>-->
+
+    <form th:action="@{/search}" method="get" class="search-form">
+        <input type="text" name="query" placeholder="Search pets..." class="search-input">
+        <button type="submit" class="search-button">🔍</button>
+    </form>
+
+    <!-- Login Button on the Right -->
+    <a href="/login" class="login-btn">Login</a>
+    <!-- Register Button on the Right-->
+    <a href="/register" class="register-btn">Register</a>
+
+</header>
+
+</body>
+</html>
