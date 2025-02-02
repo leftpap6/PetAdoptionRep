@@ -1,18 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log in</title>
 </head>
 <body>
+
 <h1>Log in</h1>
-<form action="/login" method="POST">
+<form th:action="@{/login}" method="POST">
     <label>Email:</label><br>
-    <input type="email" name="email" required><br>
+    <input type="text" name="username" required><br> <!-- Spring Security uses 'username' instead of 'email' -->
+
     <label>Password:</label><br>
     <input type="password" name="password" required><br>
+
     <button type="submit">Log In</button>
 </form>
+
+<!-- Display error messages -->
+<p th:if="${param.error}" style="color: red;">Invalid email or password.</p>
+
 </body>
 </html>
+

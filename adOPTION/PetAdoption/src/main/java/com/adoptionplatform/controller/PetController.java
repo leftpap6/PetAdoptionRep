@@ -18,7 +18,7 @@ public class PetController {
     }
 
     // Get all pets
-    @GetMapping
+    @GetMapping("/pets")
     public List<Pet> getAllPets() {
         return petService.getAllPets();
     }

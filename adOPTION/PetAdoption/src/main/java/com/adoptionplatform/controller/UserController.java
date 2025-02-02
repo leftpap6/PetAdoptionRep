@@ -23,7 +23,7 @@ public class UserController {
         return ResponseEntity.ok(newUser);
     }
 
-    // Log in a user (authentication)
+//     Log in a user (authentication)
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
         boolean validLogin = userService.validateLogin(email, password);
