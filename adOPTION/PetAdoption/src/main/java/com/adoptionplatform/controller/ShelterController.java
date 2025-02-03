@@ -1,15 +1,16 @@
 package com.adoptionplatform.controller;
 
-import com.adoptionplatform.model.AdoptionRequest;
-import com.adoptionplatform.model.Pet;
+import com.adoptionplatform.model.Shelter;
 import com.adoptionplatform.service.ShelterService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
 
-
-@RestController
-@RequestMapping("/api/shelters")
+@Controller
 public class ShelterController {
     private final ShelterService shelterService;
 
@@ -17,18 +18,19 @@ public class ShelterController {
         this.shelterService = shelterService;
     }
 
-    @GetMapping("/adoption-requests")
-    public ResponseEntity<List<AdoptionRequest>> viewAdoptionRequest() {
-        return ResponseEntity.ok(shelterService.viewAdoptionRequest());
+    @GetMapping("/shelters")
+    public String viewShelters(Model model) {
+        List<Shelter> shelters = shelterService.getAllShelters();
+        model.addAttribute("shelters", shelters);
+        return "shelters"; // Refers to shelters.html in templates
     }
 
-    @PostMapping("/add-pet")
-    public ResponseEntity<Pet> addPet(@RequestParam String name, @RequestParam int age, @RequestParam String species, @RequestParam String breed, @RequestParam String healthStatus, @RequestParam String adoptionStatus, @RequestParam long shelterId) {
-        return ResponseEntity.ok(shelterService.addPet(name, age, species, breed, healthStatus, adoptionStatus, shelterId));
-    }
-
-    @PostMapping("/communicate")
-    public ResponseEntity<String> communicateWithAdopter(@RequestParam String email, @RequestParam String message) {
-        return ResponseEntity.ok(shelterService.communicateWithAdopter(email, message));
+    @PostMapping("/shelters/add")
+    public String addShelter(@RequestParam String name, @RequestParam String location, @RequestParam int capacity) {
+        Shelter shelter = new Shelter();
+        shelter.setShelterName(name);
+        shelter.setShelterAddress(location);
+        shelterService.saveShelter(shelter);
+        return "redirect:/shelters";
     }
 }

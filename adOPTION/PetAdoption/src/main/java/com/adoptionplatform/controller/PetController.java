@@ -2,14 +2,14 @@ package com.adoptionplatform.controller;
 
 import com.adoptionplatform.model.Pet;
 import com.adoptionplatform.service.PetService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/pets")
+@Controller
+@RequestMapping("/pets")
 public class PetController {
     private final PetService petService;
 
@@ -17,29 +17,43 @@ public class PetController {
         this.petService = petService;
     }
 
-    // Get all pets
-    @GetMapping("/pets")
-    public List<Pet> getAllPets() {
-        return petService.getAllPets();
+    // Display all pets
+    @GetMapping
+    public String getAllPets(Model model) {
+        List<Pet> pets = petService.getAllPets();
+        model.addAttribute("pets", pets);
+        return "pets"; // Thymeleaf template name (pets.html)
     }
 
-    // Get pet by ID
+    // Display a single pet by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Pet> getPetById(@PathVariable Long id) {
+    public String getPetById(@PathVariable Long id, Model model) {
         Optional<Pet> pet = petService.getPetById(id);
-        return pet.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        if (pet.isPresent()) {
+            model.addAttribute("pet", pet.get());
+            return "pet-details"; // Thymeleaf template for a single pet
+        }
+        return "redirect:/pets";
     }
 
-    // Create a new pet
-    @PostMapping
-    public Pet createPet(@RequestBody Pet pet) {
-        return petService.savePet(pet);
+    // Show form to add a new pet
+    @GetMapping("/new")
+    public String showPetForm(Model model) {
+        model.addAttribute("pet", new Pet());
+        return "pet-form"; // Thymeleaf template for adding a pet
+    }
+
+    // Save a new pet
+    @PostMapping("/save")
+    public String createPet(@ModelAttribute Pet pet) {
+        petService.savePet(pet);
+        return "redirect:/pets";
     }
 
     // Delete a pet
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePet(@PathVariable Long id) {
+    @GetMapping("/delete/{id}")
+    public String deletePet(@PathVariable Long id) {
         petService.deletePet(id);
-        return ResponseEntity.noContent().build();
+        return "redirect:/pets";
     }
 }

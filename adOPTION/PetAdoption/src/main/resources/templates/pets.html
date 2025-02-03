@@ -1,13 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log in</title>
+    <title>Pet Management</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<h1>Log in</h1>
-<form action="/pets" method="POST">
+<h1>Pet Management</h1>
+
+<!-- Pet List -->
+<h2>Available Pets</h2>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Species</th>
+        <th>Breed</th>
+        <th>Health Status</th>
+        <th>Adoption Status</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="pet : ${pets}">
+        <td th:text="${pet.name}"></td>
+        <td th:text="${pet.age}"></td>
+        <td th:text="${pet.species}"></td>
+        <td th:text="${pet.breed}"></td>
+        <td th:text="${pet.healthStatus}"></td>
+        <td th:text="${pet.adoptionStatus}"></td>
+        <td>
+            <a th:href="@{/pets/adopt/{id}(id=${pet.id})}">Adopt</a> |
+            <a th:href="@{/pets/delete/{id}(id=${pet.id})}">Delete</a>
+        </td>
+    </tr>
+</table>
+
+<!-- Add Pet Form -->
+<h2>Add New Pet</h2>
+<form th:action="@{/pets/add}" method="post">
+    <label>Name:</label>
+    <input type="text" name="name" required><br>
+
+    <label>Age:</label>
+    <input type="number" name="age" required><br>
+
+    <label>Species:</label>
+    <input type="text" name="species" required><br>
+
+    <label>Breed:</label>
+    <input type="text" name="breed" required><br>
+
+    <label>Health Status:</label>
+    <input type="text" name="healthStatus" required><br>
+
+    <label>Adoption Status:</label>
+    <input type="text" name="adoptionStatus" required><br>
+
+    <button type="submit">Add Pet</button>
 </form>
 </body>
 </html>

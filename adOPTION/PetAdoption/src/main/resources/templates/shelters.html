@@ -1,11 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Shelter Management</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+<h1>Shelter Management</h1>
 
+<!-- Shelter List -->
+<h2>Available Shelters</h2>
+<table border="1">
+    <tr>
+        <th>shelterName</th>
+        <th>shelterAddress</th>
+        <th>Approval</th>
+    </tr>
+    <tr th:each="shelter : ${shelters}">
+        <td th:text="${shelter.shelterName}"></td> <!-- Changed from 'name' -->
+        <td th:text="${shelter.shelterAddress}"></td> <!-- Changed from 'location' -->
+        <td th:text="${shelter.approved} ? 'Approved' : 'Pending'"></td> <!-- Approval status -->
+    </tr>
+
+</table>
+
+<!-- Add Shelter Form -->
+<h2>Add New Shelter</h2>
+<form th:action="@{/shelters/add}" method="post">
+    <label>Name:</label>
+    <input type="text" name="name" required><br>
+
+    <label>Adress:</label>
+    <input type="text" name="location" required><br>
+
+    <label>Approval:</label>
+    <input type="text" name="approval" required><br>
+
+    <button type="submit">Add Shelter</button>
+</form>
 </body>
 </html>
-
