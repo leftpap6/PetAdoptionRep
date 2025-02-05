@@ -7,9 +7,10 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Pet {
-
+    private String image;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long petId;
     private String name;
     private String species;
@@ -20,7 +21,8 @@ public class Pet {
 
     // Getters and Setters
 
-    public Pet(long petId, String name, String species, String breed, int age, boolean healthChecked, boolean approved) {
+    public Pet(String image, long petId, String name, String species, String breed, int age, boolean healthChecked, boolean approved) {
+        this.image = image;
         this.petId = petId;
         this.name = name;
         this.species = species;
@@ -33,6 +35,11 @@ public class Pet {
     public Pet() {
 
     }
+
+
+    public String getImage() {return image;}
+
+    public void setImage(String image) {this.image = image;}
 
     public long getPetId() {
         return petId;

@@ -1,61 +1,90 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Pet Management</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/pets.css">
 </head>
 <body>
 <h1>Pet Management</h1>
 
 <!-- Pet List -->
 <h2>Available Pets</h2>
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Species</th>
-        <th>Breed</th>
-        <th>Health Status</th>
-        <th>Adoption Status</th>
-        <th>Actions</th>
-    </tr>
-    <tr th:each="pet : ${pets}">
-        <td th:text="${pet.name}"></td>
-        <td th:text="${pet.age}"></td>
-        <td th:text="${pet.species}"></td>
-        <td th:text="${pet.breed}"></td>
-        <td th:text="${pet.healthStatus}"></td>
-        <td th:text="${pet.adoptionStatus}"></td>
-        <td>
-            <a th:href="@{/pets/adopt/{id}(id=${pet.id})}">Adopt</a> |
+<!--<table border="1">-->
+<!--    <tr>-->
+<!--        <th>Name</th>-->
+<!--        <th>Age</th>-->
+<!--        <th>Species</th>-->
+<!--        <th>Breed</th>-->
+<!--        <th>Health Status</th>-->
+<!--        <th>Adoption Status</th>-->
+<!--        <th>Actions</th>-->
+<!--    </tr>-->
+<!--    <tr th:each="pet : ${pets}">-->
+<!--        <td th:text="${pet.name}"></td>-->
+<!--        <td th:text="${pet.age}"></td>-->
+<!--        <td th:text="${pet.species}"></td>-->
+<!--        <td th:text="${pet.breed}"></td>-->
+<!--        <td th:text="${pet.healthStatus}"></td>-->
+<!--        <td th:text="${pet.adoptionStatus}"></td>-->
+<!--        <td>-->
+<!--            <a th:href="@{/pets/adopt/{id}(id=${pet.id})}">Adopt</a> |-->
+<!--            <a th:href="@{/pets/delete/{id}(id=${pet.id})}">Delete</a>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--</table>-->
+
+<div class="pet-container">
+    <div class="pet-card" th:each="pet : ${pets}">
+        <img th:src="@{${pet.image}}" alt="Pet Image">
+        <div class="pet-info">
+            <p><strong>Name:</strong> <span th:text="${pet.name}"></span></p>
+            <p><strong>Age:</strong> <span th:text="${pet.age}"></span></p>
+            <p><strong>Species:</strong> <span th:text="${pet.species}"></span></p>
+            <p><strong>Breed:</strong> <span th:text="${pet.breed}"></span></p>
+            <p><strong>Health Status:</strong> <span th:text="${pet.healthStatus}"></span></p>
+            <p><strong>Adoption Status:</strong> <span th:text="${pet.adoptionStatus}"></span></p>
+        </div>
+        <div class="pet-actions">
+            <a th:href="@{/pets/adopt/{id}(id=${pet.id})}">Adopt</a>
             <a th:href="@{/pets/delete/{id}(id=${pet.id})}">Delete</a>
-        </td>
-    </tr>
-</table>
+        </div>
+    </div>
+</div>
+
 
 <!-- Add Pet Form -->
 <h2>Add New Pet</h2>
-<form th:action="@{/pets/add}" method="post">
-    <label>Name:</label>
-    <input type="text" name="name" required><br>
+<div class="add-pet-container">
+    <div class="add-pet-form">
+        <form th:action="" method="post" enctype="multipart/form-data">
 
-    <label>Age:</label>
-    <input type="number" name="age" required><br>
+        <label>Name:</label>
+        <input type="text" name="name" required><br>
 
-    <label>Species:</label>
-    <input type="text" name="species" required><br>
+        <label>Age:</label>
+        <input type="number" name="age" required><br>
 
-    <label>Breed:</label>
-    <input type="text" name="breed" required><br>
+        <label>Species:</label>
+        <input type="text" name="species" required><br>
 
-    <label>Health Status:</label>
-    <input type="text" name="healthStatus" required><br>
+        <label>Breed:</label>
+        <input type="text" name="breed" required><br>
 
-    <label>Adoption Status:</label>
-    <input type="text" name="adoptionStatus" required><br>
+        <label>Health Status:</label>
+        <input type="text" name="healthStatus" required><br>
 
-    <button type="submit">Add Pet</button>
-</form>
+        <label>Adoption Status:</label>
+        <input type="text" name="adoptionStatus" required><br>
+
+        <label>Upload Image:</label>
+        <input type="file" name="image" accept="image/*" required><br>
+
+        <button type="submit">Add Pet</button>
+        </form>
+    </div>
+
+</div>
+
 </body>
 </html>
