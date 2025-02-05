@@ -9,15 +9,18 @@ import com.adoptionplatform.repository.VetVisitRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class VetService {
     private final PetRepository petRepository;
     private final VetVisitRepository vetVisitRepository;
+    private final VetRepository vetRepository;
 
-    public VetService(PetRepository petRepository, VetVisitRepository vetVisitRepository) {
+    public VetService(PetRepository petRepository, VetVisitRepository vetVisitRepository,VetRepository vetRepository) {
         this.petRepository = petRepository;
         this.vetVisitRepository = vetVisitRepository;
+        this.vetRepository = vetRepository;
     }
 
     public VetVisit visitPet(Long vetId, Long petId, Date visitDate, String notes) {
@@ -37,6 +40,16 @@ public class VetService {
             return "Pet health verified: " + healthStatus;
         }
         return "Pet not found.";
+    }
+
+    // Fetch all vets
+    public List<Vet> getAllVets() {
+        return vetRepository.findAll();
+    }
+
+    // Save a new vet
+    public Vet saveVet(Vet vet) {
+        return vetRepository.save(vet);
     }
 }
 

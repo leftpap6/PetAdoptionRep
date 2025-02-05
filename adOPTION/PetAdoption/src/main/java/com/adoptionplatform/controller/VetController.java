@@ -1,16 +1,16 @@
 package com.adoptionplatform.controller;
 
 import com.adoptionplatform.model.Vet;
-import com.adoptionplatform.model.VetVisit;
 import com.adoptionplatform.service.VetService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/vets")
+@Controller
 public class VetController {
     private final VetService vetService;
 
@@ -18,14 +18,19 @@ public class VetController {
         this.vetService = vetService;
     }
 
-    @PostMapping("/visit")
-    public ResponseEntity<VetVisit> visitPet(@RequestParam Long vetId, @RequestParam Long petId, @RequestParam Date visitDate, @RequestParam String notes) {
-        return ResponseEntity.ok(vetService.visitPet(vetId, petId, visitDate, notes));
+    @GetMapping("/vet")
+    public String showVetPage(Model model) {
+        List<Vet> vets = vetService.getAllVets();
+        model.addAttribute("vets", vets);
+        return "vet";
     }
 
-    @PutMapping("/verify-health/{petId}")
-    public ResponseEntity<String> verifyPetHealth(@PathVariable Long petId, @RequestParam boolean healthChecked) {
-        return ResponseEntity.ok(vetService.verifyPetHealth(petId, healthChecked));
+    @PostMapping("/vet/add")
+    public String addVet(@RequestParam String name, @RequestParam String specialty) {
+        Vet newVet = new Vet();
+        newVet.setName(name);
+        newVet.setSpecialty(specialty);
+        vetService.saveVet(newVet);
+        return "redirect:/vet";
     }
 }
-
