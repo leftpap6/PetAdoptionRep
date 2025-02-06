@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ShelterRepository extends JpaRepository<Shelter, Long> {
 
-    // Custom query to find shelters with a pending status
+    // Custom query to find shelters.css with a pending status
     @Query("SELECT s FROM Shelter s WHERE s.approved = false")
     List<Shelter> findAllPendingShelters();
 }

@@ -22,7 +22,7 @@ public class ShelterController {
     public String viewShelters(Model model) {
         List<Shelter> shelters = shelterService.getAllShelters();
         model.addAttribute("shelters", shelters);
-        return "shelters"; // Refers to shelters.html in templates
+        return "shelters"; // Refers to shelters.css.html in templates
     }
 
     @PostMapping("/shelters/add")

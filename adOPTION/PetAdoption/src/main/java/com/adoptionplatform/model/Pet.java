@@ -1,28 +1,32 @@
 package com.adoptionplatform.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Pet {
-    private String image;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private long petId;
     private String name;
     private String species;
     private String breed;
     private int age;
     private boolean healthChecked;
-    private boolean approved;  // Approval status
+    private boolean approved;// Approval status
+    private String image;
+
+//    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Pet> pets = new ArrayList<>();
+
+
 
     // Getters and Setters
 
-    public Pet(String image, long petId, String name, String species, String breed, int age, boolean healthChecked, boolean approved) {
-        this.image = image;
+    public Pet(long petId, String name, String species, String breed, int age, boolean healthChecked, boolean approved,String image ) {
         this.petId = petId;
         this.name = name;
         this.species = species;
@@ -30,16 +34,12 @@ public class Pet {
         this.age = age;
         this.healthChecked = healthChecked;
         this.approved = approved;
+        this.image = image;
     }
 
     public Pet() {
 
     }
-
-
-    public String getImage() {return image;}
-
-    public void setImage(String image) {this.image = image;}
 
     public long getPetId() {
         return petId;
@@ -96,4 +96,8 @@ public class Pet {
     public void setApproved(boolean approved) {
         this.approved = approved;
     }
+
+    public String getImage() {return image;}
+
+    public void setImage(String image) {this.image = image;}
 }

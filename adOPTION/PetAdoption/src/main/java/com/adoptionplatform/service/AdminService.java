@@ -52,7 +52,7 @@ public class AdminService {
     public ResponseEntity<?> getPendingShelters() {
         List<Shelter> pendingShelters = shelterRepository.findAllPendingShelters();
         if (pendingShelters.isEmpty()) {
-            return ResponseEntity.status(404).body("No pending shelters to approve.");
+            return ResponseEntity.status(404).body("No pending shelters.css to approve.");
         }
         return ResponseEntity.ok(pendingShelters);
     }

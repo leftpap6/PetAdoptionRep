@@ -1,9 +1,6 @@
 package com.adoptionplatform.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class AdoptionRequest {
@@ -27,7 +24,11 @@ public class AdoptionRequest {
         // Default constructor
     }
 
-    public AdoptionRequest(long adoptionId, long petId, String date, String status) {
+//    @ManyToOne
+//    @JoinColumn(name = "pet_id")
+//    private Pet pet;
+
+    public AdoptionRequest(long adoptionId, long petId,  String date, String status) {
         this.adoptionId = adoptionId;
         this.petId = petId;
         this.date = date;
