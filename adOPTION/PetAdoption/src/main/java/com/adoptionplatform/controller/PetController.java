@@ -27,12 +27,12 @@ public class PetController {
     private static final String UPLOAD_DIR = "src/main/resources/static/images/";
 
     // Display all pets
-    @GetMapping // Maps to /pets
-    public String getAllPets(Model model) {
-        List<Pet> pets = petService.getAllPets();
-        model.addAttribute("pets", pets);
-        return "pets"; // Thymeleaf template name (pets.html)
-    }
+//    @GetMapping // Maps to /pets
+//    public String getAllPets(Model model) {
+//        List<Pet> pets = petService.getAllPets();
+//        model.addAttribute("pets", pets);
+//        return "pets"; // Thymeleaf template name (pets.html)
+//    }
 
     // Display a single pet by ID
     @GetMapping("/{id}") // Maps to /pets/{id}
@@ -45,8 +45,8 @@ public class PetController {
         return "redirect:/pets";
     }
 
-    // Show form to add a new pet
-    @GetMapping("/new") // Maps to /pets/new
+     //Show form to add a new pet
+    @GetMapping // Maps to /pets/new
     public String showPetForm(Model model) {
         model.addAttribute("pet", new Pet());
         return "pets"; // Thymeleaf template for adding a pet

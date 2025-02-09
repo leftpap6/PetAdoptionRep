@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.List;
+
 @Entity
 @Table(name = "app_user")
 public class User {
@@ -36,6 +38,23 @@ public class User {
 
     }
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name="app_user",
+            joinColumns = @JoinColumn(name="id"),
+//            inverseJoinColumns = @JoinColumn(name="student_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"id",})
+    )
+    private List<User> users;
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     public long getId() {
         return id;

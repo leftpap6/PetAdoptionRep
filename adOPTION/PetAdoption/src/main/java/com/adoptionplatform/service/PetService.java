@@ -23,8 +23,8 @@ public class PetService {
         return petRepository.findById(id);
     }
 
-    public Pet savePet(Pet pet) {
-        return petRepository.save(pet);
+    public void savePet(Pet pet) {
+        petRepository.save(pet);
     }
 
     public void deletePet(Long id) {

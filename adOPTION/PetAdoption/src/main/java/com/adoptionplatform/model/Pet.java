@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "pet")
 public class Pet {
 
     @Id
@@ -39,6 +40,25 @@ public class Pet {
 
     public Pet() {
 
+    }
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name="pets",
+            joinColumns = @JoinColumn(name="pet_id"),
+//            inverseJoinColumns = @JoinColumn(name="student_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"pet_id",})
+    )
+
+    private List<Pet> pets;
+
+    public List<Pet> getPets() {
+        return pets;
+    }
+
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
     }
 
     public long getPetId() {
