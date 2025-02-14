@@ -1,24 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <link rel="stylesheet" th:href="@{/css/reg.css}">
 </head>
 <body>
-<h1>Register</h1>
-<form action="/register" method="POST">
-    <label>Username:</label><br>
-    <input type="text" name="username" required><br>
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br>
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br>
-    <label>Contact Number:</label><br>
-    <input type="text" name="contactNumber" required><br>
-    <label>Role (Admin, Shelter, Vet, Adopter):</label><br>
-    <input type="text" name="role" required><br>
-    <button type="submit">Register</button>
-</form>
+
+<div class="wrapper">
+    <div class="register-wrapper">
+        <div class="register-header">Register</div>
+        <div class="register">
+            <form th:action="@{/register}" method="POST">
+                <div class="input-wrapper">
+                    <input type="text" name="username" class="input-field" required />
+                    <label class="label">Username</label>
+                </div>
+                <div class="input-wrapper">
+                    <input type="password" name="password" class="input-field" required />
+                    <label class="label">Password</label>
+                </div>
+                <div class="input-wrapper">
+                    <input type="email" name="email" class="input-field" required />
+                    <label class="label">Email</label>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" name="contactNumber" class="input-field" required />
+                    <label class="label">Contact Number</label>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" name="role" class="input-field" required />
+                    <label class="label">Role (Admin, Shelter, Vet, Adopter)</label>
+                </div>
+                <div class="input-wrapper">
+                    <input type="submit" class="input-login" value="Register" />
+                </div>
+            </form>
+            <div class="register">
+                <span>Already have an account? <a href="/login">Login</a></span>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
