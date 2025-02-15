@@ -17,9 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private UserService userService;
-
     private UserDetailsService userDetailsService;
-
     private BCryptPasswordEncoder passwordEncoder;
 
     public SecurityConfig(UserService userService, UserDetailsService userDetailsService, BCryptPasswordEncoder passwordEncoder) {
@@ -31,16 +29,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home", "/pets", "/register", "/login", "/saveUser", "/images/**", "/js/**", "/css/**", "/static/**").permitAll()
-//                        .requestMatchers("/teacher/**").hasRole("ADMIN")
-                        .anyRequest().permitAll()
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/api/**")  // ✅ Ignore CSRF for API routes
                 )
-                .formLogin((form) -> form
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/home", "/pets", "/api/users/register", "/register", "/login", "/saveUser", "/images/**", "/js/**", "/css/**", "/static/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/", true)
-                        .permitAll())
-                .logout((logout) -> logout.permitAll());
+                        .permitAll()
+                )
+                .logout(logout -> logout.permitAll());
+
         return http.build();
     }
 

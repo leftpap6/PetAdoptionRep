@@ -12,7 +12,7 @@
     <div class="register-wrapper">
         <div class="register-header">Register</div>
         <div class="register">
-            <form th:action="@{/register}" method="POST">
+            <form>
                 <div class="input-wrapper">
                     <input type="text" name="username" class="input-field" required />
                     <label class="label">Username</label>
@@ -43,6 +43,34 @@
         </div>
     </div>
 </div>
+
+<!-- ✅ Add the JavaScript code at the bottom of the page -->
+<script>
+    document.querySelector("form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Stop default form submission
+
+        let formData = {
+            username: document.querySelector("[name='username']").value,
+            email: document.querySelector("[name='email']").value,
+            password: document.querySelector("[name='password']").value,
+            contactNumber: document.querySelector("[name='contactNumber']").value,
+            role: document.querySelector("[name='role']").value
+        };
+
+        fetch("/api/users/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => response.text())
+            .then(data => {
+                alert("✅ Success: " + data);
+            })
+            .catch(error => console.error("❌ Error:", error));
+    });
+</script>
 
 </body>
 </html>

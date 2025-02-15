@@ -2,13 +2,9 @@ package com.adoptionplatform.service;
 
 import com.adoptionplatform.model.User;
 import com.adoptionplatform.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 
 @Service
 public class UserService {
@@ -21,23 +17,22 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-//    public void registerUser(String username, String rawPassword) {
-//        String encodedPassword = passwordEncoder.encode(rawPassword);
-//        // Save the encoded password in the database
-//    }
-
-    // Register a new user
+    @Transactional  // Ensures database transactions commit
     public User registerUser(User user) {
-        // Check if the email already exists
+        System.out.println("🔹 Step 1: registerUser() called with user: " + user);
+
         if (userRepository.findByEmail(user.getEmail()) != null) {
+            System.out.println("❌ Step 2: Email already exists!");
             throw new IllegalArgumentException("Email is already taken");
         }
 
-        // Encrypt the password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        System.out.println("🔹 Step 3: Password encrypted");
 
-        // Save the user to the database
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        System.out.println("✅ Step 4: User saved to database -> " + savedUser);
+
+        return savedUser;
     }
 
     // Find user by email for login
@@ -45,10 +40,29 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    // Validate user login (check password)
     @Transactional
     public boolean validateLogin(String email, String password) {
+        System.out.println("🔹 Checking login for email: " + email);
+
         User user = userRepository.findByEmail(email);
-        return user != null && passwordEncoder.matches(password, user.getPassword());
+
+        if (user == null) {
+            System.out.println("❌ User not found: " + email);
+            return false;
+        }
+
+        System.out.println("🔹 Stored hashed password: " + user.getPassword());
+        System.out.println("🔹 Entered password: " + password);
+
+        boolean isPasswordMatch = passwordEncoder.matches(password, user.getPassword());
+
+        if (isPasswordMatch) {
+            System.out.println("✅ Password match for: " + email);
+        } else {
+            System.out.println("❌ Password mismatch for: " + email);
+        }
+
+        return isPasswordMatch;
     }
+
 }

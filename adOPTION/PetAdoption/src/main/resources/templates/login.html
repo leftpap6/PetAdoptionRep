@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log in</title>
+    <title>Login</title>
     <link rel="stylesheet" th:href="@{/css/log.css}">
 </head>
 <body>
@@ -11,37 +11,20 @@
 <div class="wrapper">
     <div class="login-wrapper">
         <div class="login-header">Login</div>
-        <div class="login-form">
-            <div class="input-wrapper">
-                <input type="text" id="user"
-                       class="input-field" required />
-                <label for="user"
-                       class="label">Username</label>
-                <i class="bx bx-user icon"></i>
-            </div>
-            <div class="input-wrapper">
-                <input type="password" id="pw"
-                       class="input-field" required />
-                <label for="pw"
-                       class="label">Password</label>
-                <i class="bx bx-lock-all icon"></i>
-            </div>
-            <div class="login-check">
-                <div class="remember">
-                    <input type="checkbox"
-                    id="remember me"  />
-                    <label
-                    for="remember me">Remember me</label>
+        <div class="login">
+            <form id="loginForm">
+                <div class="input-wrapper">
+                    <input type="email" name="email" class="input-field" required />
+                    <label class="label">Email</label>
                 </div>
-<!--                <div class="forgot">-->
-<!--                    <a href="#">Forgot Password?</a>-->
-<!--                </div>-->
-            </div>
-            <div class="input-wrapper">
-                <input type="submit"
-                 class="input-login"
-                 value="Log in" />
-            </div>
+                <div class="input-wrapper">
+                    <input type="password" name="password" class="input-field" required />
+                    <label class="label">Password</label>
+                </div>
+                <div class="input-wrapper">
+                    <input type="submit" class="input-login" value="Login" />
+                </div>
+            </form>
             <div class="register">
                 <span>Don't have an account? <a href="/register">Register</a></span>
             </div>
@@ -49,32 +32,35 @@
     </div>
 </div>
 
+<!-- ✅ Add JavaScript for Fetch API Login -->
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Stop default form submission
 
+        let formData = {
+            email: document.querySelector("[name='email']").value,
+            password: document.querySelector("[name='password']").value
+        };
 
-
-
-
-
-
-
-
-
-
-
-<!--<h1>Log in</h1>-->
-<!--<form th:action="@{/login}" method="POST">-->
-<!--    <label>Email:</label><br>-->
-<!--    <input type="text" name="username" required><br> &lt;!&ndash; Spring Security uses 'username' instead of 'email' &ndash;&gt;-->
-
-<!--    <label>Password:</label><br>-->
-<!--    <input type="password" name="password" required><br>-->
-
-<!--    <button type="submit">Log In</button>-->
-<!--</form>-->
-
-<!--&lt;!&ndash; Display error messages &ndash;&gt;-->
-<!--<p th:if="${param.error}" style="color: red;">Invalid email or password.</p>-->
+        fetch("/api/users/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => response.text())
+            .then(data => {
+                if (data.includes("successful")) {
+                    alert("✅ Logged in successfully!");
+                    window.location.href = "/home"; // Redirect to home page
+                } else {
+                    alert("❌ Login failed: " + data);
+                }
+            })
+            .catch(error => console.error("❌ Error:", error));
+    });
+</script>
 
 </body>
 </html>
-
