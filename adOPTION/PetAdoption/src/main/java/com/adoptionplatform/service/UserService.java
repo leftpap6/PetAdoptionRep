@@ -21,10 +21,10 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void registerUser(String username, String rawPassword) {
-        String encodedPassword = passwordEncoder.encode(rawPassword);
-        // Save the encoded password in the database
-    }
+//    public void registerUser(String username, String rawPassword) {
+//        String encodedPassword = passwordEncoder.encode(rawPassword);
+//        // Save the encoded password in the database
+//    }
 
     // Register a new user
     public User registerUser(User user) {

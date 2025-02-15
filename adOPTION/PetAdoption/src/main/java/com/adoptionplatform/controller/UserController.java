@@ -17,10 +17,16 @@ public class UserController {
     }
 
     // Register a new user
+//    @PostMapping("/register")
+//    public ResponseEntity<User> register(@Valid @ModelAttribute User user) {
+//        User newUser = userService.registerUser(user);
+//        return ResponseEntity.ok(newUser);
+//    }
+
     @PostMapping("/register")
-    public ResponseEntity<User> register(@Valid @RequestBody User user) {
-        User newUser = userService.registerUser(user);
-        return ResponseEntity.ok(newUser);
+    public ResponseEntity<String> registerUser(@RequestBody User user) {
+        userService.registerUser(user);
+        return ResponseEntity.ok("User registered successfully!");
     }
 
 //     Log in a user (authentication)

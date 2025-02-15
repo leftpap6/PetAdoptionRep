@@ -8,7 +8,7 @@ body {
 
 /* COVER SECTION */
 .cover-header {
-    background-color: #6a0dad; /* Purple */
+    background-color: #6D5393; /* Purple */
     color: #ffffff;
     text-align: center;
     font-size: 2rem;
@@ -33,7 +33,7 @@ body {
 }
 
 .nav-links a {
-    color: white;
+    color: #ffffff;
     text-decoration: none;
     font-size: 1.3rem;
     font-weight: bold;
@@ -92,7 +92,7 @@ body {
 
 .login-btn:hover {
     background-color: white;
-    color: #2869e4;
+    color: #DC337D;
 
 }
 
@@ -114,7 +114,7 @@ body {
 
 .register-btn:hover {
     background-color: white;
-    color: #1367e4;
+    color: #DC337D;
 }
 
 /* CAROUSEL */
@@ -176,8 +176,8 @@ body {
 
 .circle:hover {
     transform: scale(1.1);
-    color: #6a0dad;
-    border-color: #6a0dad;
+    color: #6D5393;
+    border-color: #6D5393;
 }
 
 .circle img {
@@ -189,7 +189,7 @@ body {
 
 .circle-text {
     margin-top: 10px;
-    color: white;
+    color: #6D5393;
     font-size: 1.3rem;
     font-weight: bold;
     text-align: center;

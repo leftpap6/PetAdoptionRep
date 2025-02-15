@@ -42,10 +42,19 @@ public class User {
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(
             name="app_user",
-            joinColumns = @JoinColumn(name="id"),
-//            inverseJoinColumns = @JoinColumn(name="student_id"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"id",})
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name = "other_user_id"),
+
+//    uniqueConstraints = @UniqueConstraint(columnNames = {"id",})
+    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "other_user_id"})
     )
+
+//    @JoinTable(
+//            name = "user_roles",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"),
+//            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"})
+//    )
     private List<User> users;
 
     public List<User> getUsers() {
