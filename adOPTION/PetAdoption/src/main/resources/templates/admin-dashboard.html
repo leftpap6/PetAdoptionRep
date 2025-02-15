@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>Admin Dashboard</h1>
+
+<h2>Pending Pets</h2>
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Approve</th>
+  </tr>
+  <tr th:each="pet : ${pendingPets}">
+    <td th:text="${pet.id}"></td>
+    <td th:text="${pet.name}"></td>
+    <td>
+      <form th:action="@{/admin/approve/pet/{id}(id=${pet.id})}" method="post">
+        <button type="submit">Approve</button>
+      </form>
+    </td>
+  </tr>
+</table>
+
+<h2>Pending Shelters</h2>
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Approve</th>
+  </tr>
+  <tr th:each="shelter : ${pendingShelters}">
+    <td th:text="${shelter.id}"></td>
+    <td th:text="${shelter.shelterName}"></td>
+    <td>
+      <form th:action="@{/admin/approve/shelter/{id}(id=${shelter.id})}" method="post">
+        <button type="submit">Approve</button>
+      </form>
+    </td>
+  </tr>
+</table>
+
+<h2>Manage Users</h2>
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Username</th>
+    <th>Delete</th>
+  </tr>
+  <tr th:each="user : ${users}">
+    <td th:text="${user.id}"></td>
+    <td th:text="${user.username}"></td>
+    <td>
+      <form th:action="@{/admin/delete/user/{id}(id=${user.id})}" method="post">
+        <button type="submit">Delete</button>
+      </form>
+    </td>
+  </tr>
+</table>
+
+<h2>Reports</h2>
+<p th:text="${reports}"></p>
+</body>
+</html>

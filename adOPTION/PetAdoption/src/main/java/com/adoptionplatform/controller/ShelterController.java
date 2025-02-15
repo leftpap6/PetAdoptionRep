@@ -4,13 +4,12 @@ import com.adoptionplatform.model.Shelter;
 import com.adoptionplatform.service.ShelterService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/shelters")
 public class ShelterController {
     private final ShelterService shelterService;
 
@@ -18,15 +17,15 @@ public class ShelterController {
         this.shelterService = shelterService;
     }
 
-    @GetMapping("/shelters")
+    @GetMapping
     public String viewShelters(Model model) {
         List<Shelter> shelters = shelterService.getAllShelters();
         model.addAttribute("shelters", shelters);
-        return "shelters"; // Refers to shelters.css.html in templates
+        return "shelters"; // Refers to shelters.html in templates
     }
 
-    @PostMapping("/shelters/add")
-    public String addShelter(@RequestParam String name, @RequestParam String location, @RequestParam int capacity) {
+    @PostMapping("/add")
+    public String addShelter(@RequestParam String name, @RequestParam String location) {
         Shelter shelter = new Shelter();
         shelter.setShelterName(name);
         shelter.setShelterAddress(location);

@@ -4,13 +4,14 @@ import com.adoptionplatform.model.Pet;
 import com.adoptionplatform.model.Shelter;
 import com.adoptionplatform.model.User;
 import com.adoptionplatform.service.AdminService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/admin")
+@Controller
+@RequestMapping("/admin")
 public class AdminController {
 
     private final AdminService adminService;
@@ -19,42 +20,34 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    // Approve Pets
-    @GetMapping("/approve/pet")
-    public ResponseEntity<?> getPendingPets() {
-        return adminService.getPendingPets();
+    // Admin Dashboard
+    @GetMapping("/dashboard")
+    public String adminDashboard(Model model) {
+        model.addAttribute("pendingPets", adminService.getPendingPets().getBody());
+        model.addAttribute("pendingShelters", adminService.getPendingShelters().getBody());
+        model.addAttribute("users", adminService.getAllUsers().getBody());
+        model.addAttribute("reports", adminService.viewReports().getBody());
+        return "admin-dashboard"; // Thymeleaf template
     }
 
+    // Approve Pet
     @PostMapping("/approve/pet/{petId}")
-    public ResponseEntity<String> approvePet(@PathVariable long petId) {
-        return adminService.approvePet(petId);
+    public String approvePet(@PathVariable long petId) {
+        adminService.approvePet(petId);
+        return "redirect:/admin/dashboard";
     }
 
-    // Approve Shelters
-    @GetMapping("/approve/shelter")
-    public ResponseEntity<?> getPendingShelters() {
-        return adminService.getPendingShelters();
-    }
-
+    // Approve Shelter
     @PostMapping("/approve/shelter/{shelterId}")
-    public ResponseEntity<String> approveShelter(@PathVariable long shelterId) {
-        return adminService.approveShelter(shelterId);
+    public String approveShelter(@PathVariable long shelterId) {
+        adminService.approveShelter(shelterId);
+        return "redirect:/admin/dashboard";
     }
 
-    // View Reports
-    @GetMapping("/view/reports")
-    public ResponseEntity<?> viewReports() {
-        return adminService.viewReports();
-    }
-
-    // Manage Users
-    @GetMapping("/manage/users")
-    public ResponseEntity<List<User>> getAllUsers() {
-        return adminService.getAllUsers();
-    }
-
-    @DeleteMapping("/manage/users/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable long userId) {
-        return adminService.deleteUser(userId);
+    // Delete User
+    @PostMapping("/delete/user/{userId}")
+    public String deleteUser(@PathVariable long userId) {
+        adminService.deleteUser(userId);
+        return "redirect:/admin/dashboard";
     }
 }
