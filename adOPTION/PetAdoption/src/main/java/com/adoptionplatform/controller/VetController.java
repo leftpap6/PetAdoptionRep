@@ -33,4 +33,12 @@ public class VetController {
         vetService.saveVet(newVet);
         return "redirect:/vet";
     }
+
+    @PostMapping("/vet/verifyPetHealth")
+    public String verifyPetHealth(@RequestParam Long petId, @RequestParam boolean healthStatus, Model model) {
+        String result = vetService.verifyPetHealth(petId, healthStatus);
+        model.addAttribute("message", result);
+        return "vet"; // Redirects back to the vet page
+    }
+
 }

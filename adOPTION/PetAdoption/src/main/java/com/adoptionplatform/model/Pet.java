@@ -1,7 +1,6 @@
 package com.adoptionplatform.model;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,17 +16,21 @@ public class Pet {
     private String breed;
     private int age;
     private boolean healthChecked;
-    private boolean approved;// Approval status
-    private String image;
-
-//    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Pet> pets = new ArrayList<>();
+    private boolean approved; // Approval status
 
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name = "pet_shelter",
+            joinColumns = @JoinColumn(name = "pet_id"),
+            inverseJoinColumns = @JoinColumn(name = "shelter_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"pet_id", "shelter_id"})
+    )
+    private List<Shelter> shelters = new ArrayList<>();
 
-    // Getters and Setters
+    public Pet() {}
 
-    public Pet(long petId, String name, String species, String breed, int age, boolean healthChecked, boolean approved,String image ) {
+    public Pet(long petId, String name, String species, String breed, int age, boolean healthChecked, boolean approved) {
         this.petId = petId;
         this.name = name;
         this.species = species;
@@ -35,31 +38,9 @@ public class Pet {
         this.age = age;
         this.healthChecked = healthChecked;
         this.approved = approved;
-        this.image = image;
     }
 
-    public Pet() {
-
-    }
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinTable(
-            name="pets",
-            joinColumns = @JoinColumn(name="pet_id"),
-//            inverseJoinColumns = @JoinColumn(name="student_id"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"pet_id",})
-    )
-
-    private List<Pet> pets;
-
-    public List<Pet> getPets() {
-        return pets;
-    }
-
-    public void setPets(List<Pet> pets) {
-        this.pets = pets;
-    }
+    // Getters and Setters
 
     public long getPetId() {
         return petId;
@@ -117,7 +98,12 @@ public class Pet {
         this.approved = approved;
     }
 
-    public String getImage() {return image;}
 
-    public void setImage(String image) {this.image = image;}
+    public List<Shelter> getShelters() {
+        return shelters;
+    }
+
+    public void setShelters(List<Shelter> shelters) {
+        this.shelters = shelters;
+    }
 }

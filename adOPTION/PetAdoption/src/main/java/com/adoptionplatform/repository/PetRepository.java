@@ -8,6 +8,6 @@ import java.util.List;
 public interface PetRepository extends JpaRepository<Pet, Long> {
 
     // Custom query to find pending pets
-    @Query("SELECT p FROM Pet p WHERE p.approved = false ")
+    @Query("SELECT p FROM Pet p WHERE p.approved = true ")
     List<Pet> findAllPendingPets();
 }

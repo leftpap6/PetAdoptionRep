@@ -16,8 +16,8 @@
         <th>Age</th>
         <th>Species</th>
         <th>Breed</th>
-        <th>Health Status</th>
-        <th>Adoption Status</th>
+        <th>Health Checked</th>
+        <th>Approved</th>
         <th>Actions</th>
     </tr>
     <tr th:each="pet : ${pets}">
@@ -34,56 +34,28 @@
     </tr>
 </table>
 
-<!--<div class="pet-container">-->
-<!--    <div class="pet-card" th:each="pet : ${pets}">-->
-<!--        <img th:src="@{'/images/' + ${pet.image}}" alt="Pet Image">-->
-<!--        <div class="pet-info">-->
-<!--            <p><strong>Name:</strong> <span th:text="${pet.name}"></span></p>-->
-<!--            <p><strong>Age:</strong> <span th:text="${pet.age}"></span></p>-->
-<!--            <p><strong>Species:</strong> <span th:text="${pet.species}"></span></p>-->
-<!--            <p><strong>Breed:</strong> <span th:text="${pet.breed}"></span></p>-->
-<!--            <p><strong>Health Status:</strong> <span th:text="${pet.healthStatus}"></span></p>-->
-<!--            <p><strong>Adoption Status:</strong> <span th:text="${pet.adoptionStatus}"></span></p>-->
-<!--        </div>-->
-<!--        <div class="pet-actions">-->
-<!--            <a th:href="@{/pets/adopt/{id}(id=${pet.id})}">Adopt</a>-->
-<!--            <a th:href="@{/pets/delete/{id}(id=${pet.id})}">Delete</a>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-
 <!-- Add Pet Form -->
 <h2>Add New Pet</h2>
-<div class="add-pet-container">
-    <div class="add-pet-form">
-        <form th:action="@{/pets}"  method="post" enctype="multipart/form-data" th:object="${pet}">
-            <label>Name:</label>
-            <input type="text" th:field="*{name}" required><br>
+<form th:action="@{/pets}" method="post" enctype="multipart/form-data" th:object="${pet}">
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" required><br>
 
-            <label>Age:</label>
-            <input type="number" th:field="*{age}" required><br>
+    <label>Age:</label>
+    <input type="number" th:field="*{age}" required><br>
 
-            <label>Species:</label>
-            <input type="text" th:field="*{species}" required><br>
+    <label>Species:</label>
+    <input type="text" th:field="*{species}" required><br>
 
-            <label>Breed:</label>
-            <input type="text" th:field="*{breed}" required><br>
+    <label>Breed:</label>
+    <input type="text" th:field="*{breed}" required><br>
 
-            <label>Health Checked:</label>
-            <input type="checkbox" th:field="*{healthChecked}"><br>
+    <label>Health Checked:</label>
+    <input type="checkbox" th:field="*{healthChecked}"><br>
 
-            <label>Approved:</label>
-            <input type="checkbox" th:field="*{approved}"><br>
+    <label>Approved:</label>
+    <input type="checkbox" th:field="*{approved}"><br>
 
-            <label>Upload Image:</label>
-            <input type="file" name="imageFile" accept="image/*" required><br>
-
-            <button type="submit">Add Pet</button>
-        </form>
-    </div>
-
-</div>
-
+    <button type="submit">Add Pet</button>
+</form>
 </body>
 </html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Adopter Portal</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1>Adopter Portal</h1>
+
+<!-- Available Pets -->
+<h2>Available Pets</h2>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Breed</th>
+        <th>Age</th>
+        <th>Health Status</th>
+    </tr>
+    <tr th:each="pet : ${pets}">
+        <td th:text="${pet.name}"></td>
+        <td th:text="${pet.breed}"></td>
+        <td th:text="${pet.age}"></td>
+        <td th:text="${pet.healthChecked ? 'Healthy' : 'Not Checked'}"></td>
+    </tr>
+</table>
+
+<!-- Apply for Adoption -->
+<h2>Apply for Adoption</h2>
+<form th:action="@{/api/adopters/apply}" method="post">
+    <label>Adopter ID:</label>
+    <input type="text" name="adopterId" required><br>
+
+    <label>Pet ID:</label>
+    <input type="text" name="petId" required><br>
+
+    <button type="submit">Apply</button>
+</form>
+
+<!-- Schedule a Visit -->
+<h2>Schedule a Visit</h2>
+<form th:action="@{/api/adopters/schedule-visit}" method="post">
+    <label>Adoption Request ID:</label>
+    <input type="text" name="adoptionRequestId" required><br>
+
+    <label>Visit Date:</label>
+    <input type="date" name="visitDate" required><br>
+
+    <button type="submit">Schedule</button>
+</form>
+</body>
+</html>
