@@ -1,6 +1,8 @@
 package com.adoptionplatform.controller;
 
 import com.adoptionplatform.model.Pet;
+import com.adoptionplatform.repository.AdopterRepository;
+import com.adoptionplatform.service.AdopterService;
 import com.adoptionplatform.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,11 @@ import java.util.Optional;
 @RequestMapping("/pets") // Class-level mapping
 public class PetController {
     private final PetService petService;
-
+    private final AdopterService adopterService;
     @Autowired
-    public PetController(PetService petService) {
+    public PetController(PetService petService, AdopterService adopterService) {
         this.petService = petService;
+        this.adopterService = adopterService;
     }
 
     // Display a single pet by ID
@@ -55,8 +58,8 @@ public class PetController {
 
     @GetMapping ("/getPets")// Maps to /pets
     public String getAllPets(Model model) {
-        List<Pet> pets = petService.getAllPets(); // Fetch all pets
-        model.addAttribute("pets", pets);
+        List<Pet> pet = petService.getAllPets(); // Fetch all pets
+        model.addAttribute("pet", pet);
         return "pets"; // Thymeleaf template name (pets.html)
     }
 

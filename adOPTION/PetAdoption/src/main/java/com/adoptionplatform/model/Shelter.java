@@ -15,7 +15,15 @@ public class Shelter {
     private boolean approved;
 
     @ManyToMany(mappedBy = "shelters")
-    private List<Pet> pets = new ArrayList<>();
+    private List<Pet> pet = new ArrayList<>();
+
+    public List<Pet> getPets() {
+        return pet;
+    }
+
+    public void setPets(List<Pet> pet) {
+        this.pet = pet;
+    }
 
     // Getters and Setters
     public long getId() {
@@ -50,11 +58,5 @@ public class Shelter {
         this.approved = approved;
     }
 
-    public List<Pet> getPets() {
-        return pets;
-    }
 
-    public void setPets(List<Pet> pets) {
-        this.pets = pets;
-    }
 }

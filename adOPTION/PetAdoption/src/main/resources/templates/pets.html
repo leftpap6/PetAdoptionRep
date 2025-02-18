@@ -28,8 +28,8 @@
         <td th:text="${pet.healthChecked}"></td>
         <td th:text="${pet.approved}"></td>
         <td>
-            <a th:href="@{/pets/adopt/{id}(id=${pet.petId})}">Adopt</a> |
-            <a th:href="@{/pets/delete/{id}(id=${pet.petId})}">Delete</a>
+            <a th:href="@{/pet/adopt/{id}(id=${pet.petId})}">Adopt</a> |
+            <a th:href="@{/pet/delete/{id}(id=${pet.petId})}">Delete</a>
         </td>
     </tr>
 </table>

@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -16,35 +15,33 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
-    private UserService userService;
-    private UserDetailsService userDetailsService;
-    private BCryptPasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final UserDetailsService userDetailsService;
 
-    public SecurityConfig(UserService userService, UserDetailsService userDetailsService, BCryptPasswordEncoder passwordEncoder) {
+    public SecurityConfig(UserService userService, UserDetailsService userDetailsService) {
         this.userService = userService;
         this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/**")  // ✅ Ignore CSRF for API routes
-                )
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**")) // ✅ Ignore CSRF for API routes
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/home", "/pets", "/api/users/register", "/register", "/login", "/saveUser", "/images/**", "/js/**", "/css/**", "/static/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/", "/home", "/pets", "/vet", "/adopter", "/api/users/register", "/register", "/login", "/saveUser", "/images/**", "/js/**", "/css/**", "/static/**").permitAll() // ✅ Allow access to all pages
+                        .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
-                .logout(logout -> logout.permitAll());
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .permitAll()
+                );
 
         return http.build();
     }
-
-
 }
